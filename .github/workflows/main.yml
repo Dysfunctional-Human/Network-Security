@@ -82,9 +82,9 @@ jobs:
           run: |
             docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
             
-        - name: Stop and remove any containers, if running
-          run: |
-            docker ps -q --filter "name=networksecurity" | grep -q . && docker stop networksecurity && docker rm -fv networksecurity
+        # - name: Stop and remove any containers, if running
+        #   run: |
+        #     docker ps -q --filter "name=networksecurity" | grep -q . && docker stop networksecurity && docker rm -fv networksecurity
 
         - name: Run Docker Image to serve users
           run: |
@@ -93,3 +93,5 @@ jobs:
         - name: Clean previous images and containers
           run: |
             docker system prune -f
+
+# For how to deploy on EC2, check krish naik udemt course section 19 video 147

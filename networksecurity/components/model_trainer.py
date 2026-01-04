@@ -13,7 +13,13 @@ from sklearn.ensemble import AdaBoostClassifier, GradientBoostingClassifier, Ran
 import mlflow
 import dagshub
 
-dagshub.init(repo_owner='Dysfunctional-Human', repo_name='Network-Security', mlflow=True)
+dagshub_token = os.getenv('DAGSHUB_TOKEN')
+if dagshub_token:
+    os.environ['MLFLOW_TRACKING_USERNAME'] = 'Dysfunctional-Human'
+    os.environ['MLFLOW_TRACKING_PASSWORD'] = dagshub_token
+    dagshub.init(repo_owner='Dysfunctional-Human', repo_name='Network-Security', mlflow=True)
+else:
+    print("Warning: DAGSHUB_TOKEN not set, skipping DagsHub initialization")
 
 class ModelTrainer:
     def __init__(self, model_trainer_config: ModelTrainerConfig, data_transformation_artifact: DataTransformationArtifact):
